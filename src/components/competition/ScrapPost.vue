@@ -4,7 +4,7 @@
             <vs-row class="flex">
                 <vs-col v-for="post in posts" :key="post.postId" class="m-3 post-block" vs-w="3">
                     <span class="cursor-pointer" @click="scrap(post.postId)">
-                        <img :alt="post.desc" class="FFVAD post-img" crossorigin="anonymous" decoding="auto" sizes="600px"  :src="post.img">
+                        <img :alt="post.desc | truncateWords(3)" class="FFVAD post-img" crossorigin="anonymous" decoding="auto" sizes="600px"  :src="post.img">
                     </span>
                 </vs-col>
             </vs-row>
