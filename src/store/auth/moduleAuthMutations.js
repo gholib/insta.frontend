@@ -20,9 +20,8 @@ export default {
         state.isAuthenticated = false;
         state.token = null;
         state.user = null;
-        localStorage.removeItem('user-token');
-        localStorage.removeItem('user-profile');
-        localStorage.removeItem('user-permissions');
+        localStorage.removeItem('insta-token');
+        localStorage.removeItem('insta-profile');
     },
 
     SET_ERROR(state) {

@@ -34,9 +34,7 @@
                                     Неверно введен логин/пароль
                                 </p>
 
-                                <vs-button ref="loadableButton"
-                                           id="button-with-loading"
-                                           :disabled="loading"
+                                <vs-button
                                            class="vs-con-loading__container"
                                            @click="login">
                                     Вход
@@ -80,16 +78,7 @@ export default {
         },
 
         loading() {
-            if (this.loading === true) {
-                this.$vs.loading({
-                    background: 'primary',
-                    color: '#fff',
-                    container: "#button-with-loading",
-                    scale: 0.45
-                });
-            } else {
-                this.$vs.loading.close("#button-with-loading > .con-vs-loading")
-            }
+            
         }
     },
 

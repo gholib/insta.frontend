@@ -1,6 +1,9 @@
 import router from '../../router';
 
 export default {
+    LOGOUT({commit}){
+        commit('UNSET_TOKEN')
+    },
     SIGNIN({commit}, context) {
         const data = {
             instaName: context.instaName,
