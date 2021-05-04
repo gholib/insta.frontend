@@ -1,7 +1,7 @@
 <template>
   <div class="the-navbar__user-meta flex items-center" v-if="activeUserInfo.displayName">
 
-    <div class="text-right leading-tight hidden sm:block">
+    <div class="text-right leading-tight sm:block">
       <p class="font-semibold">{{user ? user.instaName : ''}}</p>
       <!-- <small>creativist</small> -->
     </div>
