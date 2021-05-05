@@ -13,23 +13,23 @@
             <template slot-scope="{data}">
                 <tbody>
                     <vs-tr :data="tr" :key="indextr" v-for="(tr, indextr) in data">
-                        <vs-td>
+                        <vs-td class="sm-p-0">
                             {{indextr + 1}}
                             <img v-if="indextr == 0" class="crown-img ml-2" src="@/assets/images/crown.svg" />
                             <img v-if="indextr == 1" class="crown-img ml-2" src="@/assets/images/second.svg" />
                             <img v-if="indextr == 2" class="crown-img ml-2" src="@/assets/images/third.svg" />
                         </vs-td>
-                        <vs-td>
+                        <vs-td class="sm-p-0">
                             @{{tr.userName}}
                             <img v-if="indextr == 0" class="crown-img ml-2" src="@/assets/images/crown.svg" />
                         </vs-td>
                         <!-- <vs-td>
                             {{tr.comments}}
                         </vs-td> -->
-                        <vs-td>
+                        <vs-td class="sm-p-0">
                             {{tr.likes}}
                         </vs-td>
-                        <vs-td>
+                        <vs-td class="sm-p-0">
                             {{tr.totalCoin}}
                         </vs-td>
                     </vs-tr>
@@ -88,5 +88,10 @@ export default {
     .crown-img{
         width: 25px;
         height: 25px;
+    }
+    @media (max-width: 1000px) {
+        .sm-p-0{
+            padding: 3px !important;
+        }
     }
 </style>
