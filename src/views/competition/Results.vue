@@ -21,7 +21,6 @@
                         </vs-td>
                         <vs-td class="sm-p-0">
                             {{tr.userName}}
-                            <img v-if="tr.id == 0" class="crown-img ml-2" src="@/assets/images/crown.svg" />
                         </vs-td>
                         <!-- <vs-td>
                             {{tr.comments}}
