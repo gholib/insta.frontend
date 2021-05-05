@@ -20,7 +20,7 @@
                             <img v-if="tr.id == 2" class="crown-img ml-2" src="@/assets/images/third.svg" />
                         </vs-td>
                         <vs-td class="sm-p-0">
-                            @{{tr.userName}}
+                            {{tr.userName}}
                             <img v-if="tr.id == 0" class="crown-img ml-2" src="@/assets/images/crown.svg" />
                         </vs-td>
                         <!-- <vs-td>
@@ -63,7 +63,7 @@ export default {
         filterResults(data) {
             data = data.map(el => {
                 return {
-                    userName: el.userName,
+                    userName: '@' + el.userName,
                     likes: el.likes,
                     comments: el.comments,
                     totalCoin: el.likes*this.likeCount + el.comments*this.commentCoin
