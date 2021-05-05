@@ -15,9 +15,13 @@
                     <vs-tr :data="tr" :key="indextr" v-for="(tr, indextr) in data">
                         <vs-td>
                             {{indextr + 1}}
+                            <img v-if="indextr == 0" class="crown-img ml-2" src="@/assets/images/crown.svg" />
+                            <img v-if="indextr == 1" class="crown-img ml-2" src="@/assets/images/second.svg" />
+                            <img v-if="indextr == 2" class="crown-img ml-2" src="@/assets/images/third.svg" />
                         </vs-td>
                         <vs-td>
                             @{{tr.userName}}
+                            <img v-if="indextr == 0" class="crown-img ml-2" src="@/assets/images/crown.svg" />
                         </vs-td>
                         <!-- <vs-td>
                             {{tr.comments}}
@@ -41,7 +45,7 @@ export default {
     data(){
         return{
             results: null,
-            commentCoin: 3,
+            commentCoin: 1.75,
             likeCount: 5
         }
     },
@@ -79,3 +83,10 @@ export default {
     }
 }
 </script>
+
+<style lang="scss">
+    .crown-img{
+        width: 25px;
+        height: 25px;
+    }
+</style>
