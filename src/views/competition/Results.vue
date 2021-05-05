@@ -14,14 +14,14 @@
                 <tbody>
                     <vs-tr :data="tr" :key="indextr" v-for="(tr, indextr) in data">
                         <vs-td class="sm-p-0">
-                            {{indextr + 1}}
-                            <img v-if="indextr == 0" class="crown-img ml-2" src="@/assets/images/crown.svg" />
-                            <img v-if="indextr == 1" class="crown-img ml-2" src="@/assets/images/second.svg" />
-                            <img v-if="indextr == 2" class="crown-img ml-2" src="@/assets/images/third.svg" />
+                            {{tr.id + 1}}
+                            <img v-if="tr.id == 0" class="crown-img ml-2" src="@/assets/images/crown.svg" />
+                            <img v-if="tr.id == 1" class="crown-img ml-2" src="@/assets/images/second.svg" />
+                            <img v-if="tr.id == 2" class="crown-img ml-2" src="@/assets/images/third.svg" />
                         </vs-td>
                         <vs-td class="sm-p-0">
                             @{{tr.userName}}
-                            <img v-if="indextr == 0" class="crown-img ml-2" src="@/assets/images/crown.svg" />
+                            <img v-if="tr.id == 0" class="crown-img ml-2" src="@/assets/images/crown.svg" />
                         </vs-td>
                         <!-- <vs-td>
                             {{tr.comments}}
@@ -74,6 +74,15 @@ export default {
                     return 1
                 }
                 return -1
+            })
+            this.results = this.results.map((el, index) => {
+                return {
+                    id: index,
+                    userName: el.userName,
+                    likes: el.likes,
+                    comments: el.comments,
+                    totalCoin: el.totalCoin
+                }
             })
         }
     },
