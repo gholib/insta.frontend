@@ -45,6 +45,11 @@ const router = new Router({
                 component: () => import('./views/competition/Results.vue')
               },
               {
+                path: '/projects/daler',
+                name: 'daler',
+                component: () => import('./views/projects/InstagramFollowing.vue')
+              },
+              {
                 path: '/register',
                 name: 'register',
                 component: () => import('@/views/pages/Register.vue')
@@ -65,7 +70,7 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
-  if (!['login', 'instagram', 'register'].includes(to.name) && !store.getters['auth/getToken']) next({ name: 'login' })
+  if (!['login', 'instagram', 'register', 'daler'].includes(to.name) && !store.getters['auth/getToken']) next({ name: 'login' })
   else next()
 })
 

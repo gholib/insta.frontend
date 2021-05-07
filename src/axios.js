@@ -55,7 +55,7 @@ export default () => {
             if (Array.isArray(error.response.data.errors)) {
                 const errors = error.response.data.errors
                 errors.forEach(el => {
-                    errorMessageNotification(el.message, 'warning')
+                    errorMessageNotification(el.message, 'warning', 8000)
                 })
             }else {
                 const errors = Object.entries(error.response.data.errors)
