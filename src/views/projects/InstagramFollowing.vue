@@ -67,7 +67,7 @@ export default {
   methods: {
       download(){
           this.$vs.loading()
-          this.$http.post('/projects/download-checklist', {instaName: this.instaName}).then(res => {
+          this.$http.post('/projects/download-checklist', {instaName: this.instaName.toLowerCase()}).then(res => {
               this.instaName = null
               const anchor = document.createElement('a')
                 anchor.href = res.data.fileLink;
