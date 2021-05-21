@@ -1,13 +1,24 @@
 <template>
     <div :key="competitionId">
-        <vs-popup classContent="popup-example" title="Instagram scraper" :active.sync="popupActive" fullscreen>
+        <vs-popup classContent="popup-scraper" title="Instagram scraper" :active.sync="popupActive">
             <vs-row class="flex">
-                <vs-col v-for="post in posts" :key="post.postId" class="m-3 post-block" vs-w="3">
-                    <span class="cursor-pointer" @click="scrap(post.postId)">
+                <vs-col v-for="post in posts" :key="post.postId" class="m-0 post-block" vs-w="3">
+                    <vs-button type="flat" :disabled="disabledPost(post)" class="cursor-pointer p-0 m-0" @click="selectPost(post)">
                         <img :alt="post.desc | truncateWords(3)" class="FFVAD post-img" crossorigin="anonymous" decoding="auto" sizes="600px"  :src="post.img">
-                    </span>
+                    </vs-button>
                 </vs-col>
             </vs-row>
+            <div>
+                <vs-input type="number" v-model="commentCoin" class="w-full" label="Баллы за коментария" />
+                <vs-input type="number" v-model="likeCoin" class="w-full" label="Баллы за лайк" />
+
+                <vs-button @click="scrap" type="border" color="success" class="mr-4 mt-4">
+                    Парсить
+                </vs-button>
+                <vs-button @click="clearSelectedPost" type="border" color="warning" class="mt-4">
+                    Отменить
+                </vs-button>
+            </div>
         </vs-popup>
     </div>
 </template>
@@ -20,7 +31,10 @@ export default {
         return {
             popupActive: false,
             postId: null,
-            posts: []
+            posts: [],
+            selectedPost: null,
+            commentCoin: 1.35,
+            likeCoin: 5,
         }
     },
 
@@ -36,19 +50,29 @@ export default {
         popupActive(val){
             if (!val) {
                this.$emit('closedPopup', val) 
+               this.clearSelectedPost()
             }
         }
     },
 
     methods: {
+        clearSelectedPost() {
+            this.selectedPost = null
+        },
         openPopup(){
             this.getPosts()
 
             this.popupActive = true
         },
-        scrap(postId){
+        scrap(){
+            const payload = {
+                postId: this.selectedPost.postId,
+                competitionId: this.competitionId,
+                commentCoin: this.commentCoin,
+                likeCoin: this.likeCoin
+            }
             this.$vs.loading()
-            this.$http.post('scrap', {postId, competitionId: this.competitionId})
+            this.$http.post('scrap', payload)
             .then(res => {
                 console.log('ddd', res.data);
                 this.popupActive = false
@@ -77,14 +101,23 @@ export default {
             }else{
                 this.popupActive = true
             }
+        },
+        selectPost(post) {
+            this.selectedPost = post
+        },
+        disabledPost(post) {
+            return this.selectedPost && this.selectedPost.postId !== post.postId
         }
     },
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
     .post-img{
-        width: 100%;
-        height: 100%;
+        width: 90%;
+        height: 200px;
+    }
+    .con-vs-popup .vs-popup {
+        width: 960px;
     }
 </style>

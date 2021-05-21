@@ -44,7 +44,7 @@ export default {
     data(){
         return{
             results: null,
-            commentCoin: 1.75,
+            commentCoin: 1.35,
             likeCount: 5
         }
     },
@@ -65,11 +65,11 @@ export default {
                     userName: '@' + el.userName,
                     likes: el.likes,
                     comments: el.comments,
-                    totalCoin: el.likes*this.likeCount + el.comments*this.commentCoin
+                    totalCoin: el.coins
                 }
             })
             this.results = data.sort((a, b) => {
-                if (a.totalCoin < b.totalCoin) {
+                if (Number(a.totalCoin) < Number(b.totalCoin)) {
                     return 1
                 }
                 return -1
