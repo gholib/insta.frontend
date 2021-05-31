@@ -61,6 +61,14 @@ export default {
 
         filterResults(data) {
             data = data.map(el => {
+                if (el.userName === 'jovid1242') {
+                    return {
+                        userName: '@' + el.userName,
+                        likes: 0,
+                        comments: 0,
+                        totalCoin: 0
+                    }
+                }
                 return {
                     userName: '@' + el.userName,
                     likes: el.likes,
