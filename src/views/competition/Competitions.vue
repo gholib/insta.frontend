@@ -55,7 +55,7 @@
         <vs-th>Название</vs-th>
         <vs-th sort-key="category">Ссылка</vs-th>
         <vs-th>Действие</vs-th>
-        <vs-th>Парсить пост</vs-th>
+        <vs-th class="flex justify-end">Парсить пост</vs-th>
       </template>
 
         <template slot-scope="{data}">
@@ -71,20 +71,28 @@
               </vs-td>
 
               <vs-td>
-                <router-link :to="'instagram/' + tr.link">
+                <vx-tooltip title="Ссылка на конкурс">
+                  <router-link :to="'instagram/' + tr.link">
                     {{ tr.link }}
-                </router-link>
+                  </router-link>
+                </vx-tooltip>
               </vs-td>
 
               <vs-td class="whitespace-no-wrap flex">
-                <feather-icon class="ml-3" icon="EditIcon" svgClasses="w-5 h-5 hover:text-primary stroke-current" @click.stop="editData(tr)" />
-                <feather-icon icon="TrashIcon" svgClasses="w-5 h-5 hover:text-danger stroke-current" class="ml-3" @click.stop="openConfirm(tr.id)" />
+                <div class="flex">
+                  <vx-tooltip title="Изменить конкурс">
+                    <feather-icon class="ml-3" icon="EditIcon" svgClasses="w-5 h-5 hover:text-primary stroke-current" @click.stop="editData(tr)" />
+                  </vx-tooltip>
+                  <vx-tooltip title="Удалить конкурс">
+                    <feather-icon icon="TrashIcon" svgClasses="w-5 h-5 hover:text-danger stroke-current" class="ml-3" @click.stop="openConfirm(tr.id)" />
+                  </vx-tooltip>
+                </div>
               </vs-td>
 
               <vs-td>
-                  <vx-tooltip class="ml-6" title="Парсить пост">
+                  <vx-tooltip title="Парсить пост" class="flex justify-end pr-6">
                     <feather-icon icon="RefreshCwIcon" svgClasses="w-5 h-5 hover:text-primary stroke-current" @click.stop="scrapPost(tr.id)" />
-                </vx-tooltip>
+                  </vx-tooltip>
               </vs-td>
 
             </vs-tr>

@@ -3,8 +3,8 @@ import store from './store/store'
 import router from './router'
 import Vue from 'vue'
 
-const apiUrl = 'http://localhost:3000/api';
-
+let apiUrl = 'http://localhost:3000/api';
+// apiUrl = 'https://node.delphi.school/api';
 export default () => {
 
     const http = axios.create({
@@ -65,8 +65,12 @@ export default () => {
             }
         }
 
-        if (error.response.data.code === 404) {
-            //router.replace('/pages/error-404');
+        if (error.response.status === 400) {
+            errorMessageNotification(error.response.data.message, 'warning', 5000)
+        }
+
+        if (error.response.status === 404) {
+            router.replace('/pages/error-404');
         }
 
         return Promise.reject(error);

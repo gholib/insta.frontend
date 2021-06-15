@@ -23,7 +23,7 @@ const router = new Router({
               },
               {
                 path: '/competitions',
-                name: 'home',
+                name: 'competitions',
                 component: () => import('./views/competition/Competitions.vue')
               },
             ],

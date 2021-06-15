@@ -1,21 +1,25 @@
 <template>
     <div :key="competitionId">
-        <vs-popup classContent="popup-scraper" title="Instagram scraper" :active.sync="popupActive">
+        <vs-popup classContent="popup-scraper" title="Парсинг поста" :active.sync="popupActive">
             <vs-row class="flex">
                 <vs-col v-for="post in posts" :key="post.postId" class="m-0 post-block" vs-w="3">
-                    <vs-button type="flat" :disabled="disabledPost(post)" class="cursor-pointer p-0 m-0" @click="selectPost(post)">
-                        <img :alt="post.desc | truncateWords(3)" class="FFVAD post-img" crossorigin="anonymous" decoding="auto" sizes="600px"  :src="post.img">
+                    <vs-button type="flat" 
+                            :disabled="disabledPost(post)" class="cursor-pointer p-0 m-0" 
+                            @click="selectPost(post)">
+                        <img :alt="post.desc | truncateWords(3)" class="FFVAD post-img" 
+                            crossorigin="anonymous" decoding="auto" sizes="600px"  
+                            :src="post.img">
                     </vs-button>
                 </vs-col>
             </vs-row>
             <div>
-                <vs-input type="number" v-model="commentCoin" class="w-full" label="Баллы за коментария" />
-                <vs-input type="number" v-model="likeCoin" class="w-full" label="Баллы за лайк" />
-
                 <vs-button @click="scrap" type="border" color="success" class="mr-4 mt-4">
                     Парсить
                 </vs-button>
-                <vs-button @click="clearSelectedPost" type="border" color="warning" class="mt-4">
+                <vs-button @click="clearSelectedPost" type="border" color="warning" class="mt-4 mr-4">
+                    Сбросить
+                </vs-button>
+                <vs-button @click="popupActive = false" type="border" color="danger" class="mt-4">
                     Отменить
                 </vs-button>
             </div>
@@ -33,15 +37,10 @@ export default {
             postId: null,
             posts: [],
             selectedPost: null,
-            commentCoin: 1.35,
-            likeCoin: 5,
         }
     },
 
     watch:{
-        // competitionId(){
-        //     this.getPosts()
-        // },
         scrapPostActive(val){
             if (val) {
                 this.getPosts()
@@ -68,14 +67,20 @@ export default {
             const payload = {
                 postId: this.selectedPost.postId,
                 competitionId: this.competitionId,
-                commentCoin: this.commentCoin,
-                likeCoin: this.likeCoin
             }
             this.$vs.loading()
             this.$http.post('scrap', payload)
-            .then(res => {
-                console.log('ddd', res.data);
+            .then(() => {
                 this.popupActive = false
+                this.$vs.notify({
+                    title: 'Success',
+                    text: 'Успешно запушен процесс вычисления данных!',
+                    color: 'success',
+                    time: 5000,
+                    iconPack: 'feather',
+                    icon: 'icon-alert-circle',
+                    position: 'top-center',
+                });
             }).finally(() => {
                 this.popupActive = false
                 this.$vs.loading.close()

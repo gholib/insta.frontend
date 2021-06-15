@@ -24,7 +24,16 @@
       <div class="p-6">
         <!-- NAME -->
         <vs-input label="Название" v-model="dataName" class="mt-5 w-full" name="item-name" />
-        <vs-input label="Ссылка" v-model="dataLink" class="mt-5 w-full" name="item-name" />
+        <vs-input label="Ссылка" v-model="dataLink" class="mt-5 w-full mb-3" name="item-name" />
+        <label>Начало</label>
+        <flat-pickr class="w-full mb-3" :config="configFromdateTimePicker" v-model="start" />
+        <label>Конец</label>
+        <flat-pickr class="w-full mb-3" :config="configTodateTimePicker" v-model="end"
+          @on-change="validateEndData" />
+        <label>Время парсинга</label>
+        <flat-pickr class="w-full mb-3" :config="configTimePicker" v-model="scrapTime" label="To Date" />
+        <vs-input type="number" v-model="commentCoin" class="mt-1 w-full" label="Баллы за коментария" />
+        <vs-input type="number" v-model="likeCoin" class="mt-5 w-full" label="Баллы за лайк" />
       </div>
       <div class="flex flex-wrap items-center p-6">
         <vs-button class="mr-6" @click="submitData">Сохранить</vs-button>
@@ -35,7 +44,9 @@
 </template>
 
 <script>
-import VuePerfectScrollbar from "vue-perfect-scrollbar";
+import VuePerfectScrollbar from "vue-perfect-scrollbar"
+import flatPickr from 'vue-flatpickr-component';
+import 'flatpickr/dist/flatpickr.css';
 
 export default {
   props: {
@@ -50,6 +61,7 @@ export default {
   },
   components: {
     VuePerfectScrollbar,
+    flatPickr
   },
   data() {
     return {
@@ -62,6 +74,24 @@ export default {
         maxScrollbarLength: 60,
         wheelSpeed: 0.6,
       },
+      start: null,
+      end: null,
+      scrapTime: null,
+      configFromdateTimePicker: {
+        minDate: new Date(),
+        maxDate: null
+      },
+      configTodateTimePicker: {
+        minDate: null
+      },
+      configTimePicker: {
+        enableTime: true,
+        noCalendar: true,
+        dateFormat: 'H:i',
+        time_24hr: true,
+      },
+      commentCoin: 1.5,
+      likeCoin: 5,
     };
   },
   computed: {
@@ -85,10 +115,18 @@ export default {
       this.dataId = null;
       this.dataName = "";
       this.dataLink = "";
+      this.start = ''
+      this.end = ''
+      this.scrapTime = ''
+      this.likeCoin = 5
+      this.commentCoin = 1.5
     },
     submitData() {
       this.$validator.validateAll().then((result) => {
         if (result) {
+          if (new Date(this.end) <= new Date(this.start)) {
+            return this.dispayError('Неправильный формат даты начало')
+          }
           if (this.data !== null && this.data.id >= 0) {
             this.$store
               .dispatch("competition/UPDATE_COMPETITION", this)
@@ -107,6 +145,24 @@ export default {
         }
       });
     },
+
+    dispayError(text) {
+      this.$vs.notify({
+        time: 2500,
+        title: 'Ошибка',
+        text: text,
+        iconPack: 'feather',
+        icon: 'icon-alert-circle',
+        position: 'top-center',
+        color: 'warning'
+      })
+    },
+    validateEndData() {
+      if (!this.start || new Date(this.end) <= new Date(this.start)) {
+        this.end = null
+        return this.dispayError('Неправильный формат даты начало')
+      }
+    }
   },
 
   watch: {
@@ -116,10 +172,15 @@ export default {
         this.initValues();
         this.$validator.reset();
       } else {
-        const { id, link, name } = JSON.parse(JSON.stringify(this.data));
+        const { id, link, name, start, end, scrapTime, likeCoin, commentCoin } = JSON.parse(JSON.stringify(this.data));
         this.dataId = id;
         this.dataName = name;
         this.dataLink = link;
+        this.start = start
+        this.end = end
+        this.scrapTime = scrapTime
+        this.likeCoin = likeCoin
+        this.commentCoin = commentCoin
       }
     },
   },
