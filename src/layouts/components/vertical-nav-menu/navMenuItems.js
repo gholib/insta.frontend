@@ -1,15 +1,21 @@
 export default [
+  // {
+  //   url: "/",
+  //   name: "Главная",
+  //   slug: "home",
+  //   icon: "HomeIcon",
+  // },
   {
-    url: "/",
-    name: "Главная",
-    slug: "home",
-    icon: "HomeIcon",
-  },
-  {
-    url:'/competitions',
+    url:'/',
     name: "Конкурсы",
     slug: "add",
     icon: "CommandIcon",
+  },
+  {
+    url:'/randomizer',
+    name: "Рандомайзер",
+    slug: "add",
+    icon: "GridIcon",
   },
   // {
   //   url:null,

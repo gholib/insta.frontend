@@ -12,7 +12,7 @@ export default {
         context.$vs.loading({color: 'rgb(228, 222, 37)' })
         context.$http.post('login', data).then(response => {
             context.$vs.loading.close()
-            commit('SET_TOKEN', [response.data.token, response.data.user]);
+            commit('SET_TOKEN', [response.data.accessToken, response.data.user]);
 
             router.push('/')
 

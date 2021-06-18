@@ -28,8 +28,7 @@
         <label>Начало</label>
         <flat-pickr class="w-full mb-3" :config="configFromdateTimePicker" v-model="start" />
         <label>Конец</label>
-        <flat-pickr class="w-full mb-3" :config="configTodateTimePicker" v-model="end"
-          @on-change="validateEndData" />
+        <flat-pickr class="w-full mb-3" :config="configTodateTimePicker" v-model="end" />
         <label>Время парсинга</label>
         <flat-pickr class="w-full mb-3" :config="configTimePicker" v-model="scrapTime" label="To Date" />
         <vs-input type="number" v-model="commentCoin" class="mt-1 w-full" label="Баллы за коментария" />
@@ -78,11 +77,11 @@ export default {
       end: null,
       scrapTime: null,
       configFromdateTimePicker: {
-        minDate: new Date(),
+        minDate: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDay()),
         maxDate: null
       },
       configTodateTimePicker: {
-        minDate: null
+        minDate: new Date(),
       },
       configTimePicker: {
         enableTime: true,
@@ -124,9 +123,6 @@ export default {
     submitData() {
       this.$validator.validateAll().then((result) => {
         if (result) {
-          if (new Date(this.end) <= new Date(this.start)) {
-            return this.dispayError('Неправильный формат даты начало')
-          }
           if (this.data !== null && this.data.id >= 0) {
             this.$store
               .dispatch("competition/UPDATE_COMPETITION", this)
@@ -157,12 +153,6 @@ export default {
         color: 'warning'
       })
     },
-    validateEndData() {
-      if (!this.start || new Date(this.end) <= new Date(this.start)) {
-        this.end = null
-        return this.dispayError('Неправильный формат даты начало')
-      }
-    }
   },
 
   watch: {
@@ -172,7 +162,7 @@ export default {
         this.initValues();
         this.$validator.reset();
       } else {
-        const { id, link, name, start, end, scrapTime, likeCoin, commentCoin } = JSON.parse(JSON.stringify(this.data));
+        const { id, link, name, start, end, scrapTime, likeCoin, commentCoin } = this.data
         this.dataId = id;
         this.dataName = name;
         this.dataLink = link;

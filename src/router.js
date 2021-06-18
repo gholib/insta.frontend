@@ -16,15 +16,20 @@ const router = new Router({
             path: '',
             component: () => import('./layouts/main/Main.vue'),
             children: [
+              // {
+              //   path: '/',
+              //   name: 'home',
+              //   component: () => import('./views/Home.vue')
+              // },
               {
                 path: '/',
-                name: 'home',
-                component: () => import('./views/Home.vue')
-              },
-              {
-                path: '/competitions',
                 name: 'competitions',
                 component: () => import('./views/competition/Competitions.vue')
+              },
+              {
+                path: '/randomizer',
+                name: 'randomizer',
+                component: () => import('./views/randomizer/Randomizer.vue')
               },
             ],
         },

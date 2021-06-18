@@ -70,11 +70,11 @@
                 <p class="product-category">{{ tr.name }}</p>
               </vs-td>
 
-              <vs-td>
+              <vs-td> 
                 <vx-tooltip title="Ссылка на конкурс">
-                  <router-link :to="'instagram/' + tr.link">
+                  <a :href="'instagram/' + tr.link" target="blank">
                     {{ tr.link }}
-                  </router-link>
+                  </a>
                 </vx-tooltip>
               </vs-td>
 

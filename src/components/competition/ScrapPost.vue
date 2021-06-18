@@ -69,7 +69,7 @@ export default {
                 competitionId: this.competitionId,
             }
             this.$vs.loading()
-            this.$http.post('scrap', payload)
+            this.$http.post('instagram/scrap_post', payload)
             .then(() => {
                 this.popupActive = false
                 this.$vs.notify({
