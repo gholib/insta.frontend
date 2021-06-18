@@ -60,10 +60,8 @@ Vue.filter('datetime', function (value) {
 
 Vue.filter('onlytime', function (value) {
     value = String(value);
-    const time = value.slice(11, 13);
-    const mins = value.slice(14, 16);
 
-    return time + ':' + mins;
+    return value.slice(0, -3)
 });
 
 Vue.filter('fromNow', function (value) {

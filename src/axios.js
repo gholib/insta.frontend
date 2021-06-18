@@ -70,6 +70,10 @@ export default () => {
             errorMessageNotification(error.response.data.message, 'warning', 5000)
         }
 
+        if (error.response.status === 500) {
+            errorMessageNotification(error.response.data.message, 'warning', 5000)
+        }
+
         if (error.response.status === 404) {
             router.replace('/pages/error-404');
         }

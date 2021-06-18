@@ -51,11 +51,15 @@
       </div>
 
       <template slot="thead">
-        <vs-th sort-key="name">Номер</vs-th>
+        <vs-th>Номер</vs-th>
         <vs-th>Название</vs-th>
-        <vs-th sort-key="category">Ссылка</vs-th>
+        <vs-th>Ссылка</vs-th>
+        <vs-th>Начало</vs-th>
+        <vs-th>Конец</vs-th>
+        <vs-th>Время парсинга</vs-th>
+        <vs-th>дата создания</vs-th>
+        <vs-th>Парсить пост</vs-th>
         <vs-th>Действие</vs-th>
-        <vs-th class="flex justify-end">Парсить пост</vs-th>
       </template>
 
         <template slot-scope="{data}">
@@ -77,6 +81,30 @@
                   </a>
                 </vx-tooltip>
               </vs-td>
+              
+              <vs-td class="img-container">
+                <p class="product-category">{{ tr.start | datetime}}</p>
+              </vs-td>
+              
+              <vs-td class="img-container">
+                <p class="product-category">{{ tr.end | datetime}}</p>
+              </vs-td>
+              
+              <vs-td class="img-container">
+                <p class="product-category">{{ tr.scrapTime | onlytime}}</p>
+              </vs-td>
+              
+              <vs-td class="img-container">
+                <p class="product-category">{{ tr.createdAt | datetime}}</p>
+              </vs-td>          
+
+              <vs-td>
+                  <vx-tooltip title="Парсить пост">
+                    <feather-icon icon="RefreshCwIcon" 
+                      svgClasses="w-5 h-5 hover:text-primary stroke-current" 
+                        @click.stop="scrapPost(tr.id)" />
+                  </vx-tooltip>
+              </vs-td>
 
               <vs-td class="whitespace-no-wrap flex">
                 <div class="flex">
@@ -89,11 +117,33 @@
                 </div>
               </vs-td>
 
-              <vs-td>
-                  <vx-tooltip title="Парсить пост" class="flex justify-end pr-6">
-                    <feather-icon icon="RefreshCwIcon" svgClasses="w-5 h-5 hover:text-primary stroke-current" @click.stop="scrapPost(tr.id)" />
-                  </vx-tooltip>
-              </vs-td>
+              <template class="expand-user" slot="expand">
+                <div class="con-expand-users w-full border-active-color">
+                  <div class="w-full" 
+                    v-for="post in tr.Post" :key="post.postShortcode">
+                    <div v-if="refreshedPostId !== post.id" class="con-btns-user flex items-center justify-between mt-2">
+                      <div class="con-userx flex items-center justify-start">
+                        <a :href="'https://www.instagram.com/p/' +  post.postShortcode" target="_blank" 
+                          rel="noopener noreferrer">
+                          <span class="mr-6">{{ 'https://www.instagram.com/p/' +  post.postShortcode }}</span>
+                        </a>
+                      </div>
+                      <div>
+                        <vx-tooltip title="Дата вычисления активности">
+                          <span class="ml-6">{{ post.createdAt | fromNow }}</span>
+                        </vx-tooltip>
+                      </div>
+                      <div class="flex">
+                        <vx-tooltip title="Заново вычислить активность поста">
+                          <vs-button type="border" size="small" @click="refreshSrapPost(post)"
+                          icon-pack="feather" icon="icon-refresh-cw" 
+                            color="danger"/>
+                        </vx-tooltip>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </template>
 
             </vs-tr>
           </tbody>
@@ -125,6 +175,8 @@ export default {
       addNewDataSidebar: false,
       sidebarData: {},
       deletedId:null,
+      refreshPost: null,
+      refreshedPostId: null
     }
   },
   computed: {
@@ -173,6 +225,38 @@ export default {
     scrapPost(id){
         this.competitionId = id
         this.scrapPostActive = true
+    },
+    refreshSrapPost(post) {
+      this.refreshPost = post
+      this.$vs.dialog({
+        type: 'confirm',
+        color: 'danger',
+        title: `Внимание`,
+        text: 'Вычисленные данные поста будут удалены и заново будут вычислятся. Вы уверены ?',
+        accept: this.refreshScrap,
+        acceptText: "Уверен",
+        cancelText: "Отменить"
+      })
+    },
+    refreshScrap() {
+      this.$vs.loading()
+      this.$http.post('instagram/refresh_scrap_post', {
+        postShortcode: this.refreshPost.postShortcode,
+        competitionId: this.refreshPost.competitionId
+      }).then(() => {
+        this.refreshedPostId = this.refreshPost.id
+        this.$vs.notify({
+                time: 2500,
+                title: 'Success',
+                text: 'Успешно запущено перевычисление!',
+                iconPack: 'feather',
+                icon: 'icon-alert-circle',
+                position: 'top-center',
+                color: 'success'
+            });
+      }).finally(() => {
+        this.$vs.loading.close()
+      })
     }
   },
 
@@ -182,3 +266,9 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+  .border-active-color{
+    background: #31333d;;
+  }
+</style>
