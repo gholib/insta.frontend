@@ -23,6 +23,10 @@
     >
       <div class="p-6">
         <!-- NAME -->
+        <span v-if="timeInServer" :key="timeInServer">
+          <small>Время на сервере</small>
+          {{timeInServer | onlytime}}
+        </span>
         <vs-input label="Название" v-model="dataName" class="mt-5 w-full" name="item-name" />
         <vs-input label="Ссылка" v-model="dataLink" class="mt-5 w-full mb-3" name="item-name" />
         <label>Начало</label>
@@ -91,6 +95,7 @@ export default {
       },
       commentCoin: 1.5,
       likeCoin: 5,
+      timeInServer: null,
     };
   },
   computed: {
@@ -153,11 +158,21 @@ export default {
         color: 'warning'
       })
     },
+
+    getTimeInServer() {
+      this.$vs.loading()
+      this.$http.get('time_in_server').then(res => {
+        this.timeInServer = String(res.data.date).replace(/T/gi, '  ').slice(0, -5)
+      }).finally(() => {
+        this.$vs.loading.close()
+      })
+    }
   },
 
   watch: {
     isSidebarActive(val) {
       if (!val) return;
+      this.getTimeInServer()
       if (Object.entries(this.data).length === 0) {
         this.initValues();
         this.$validator.reset();
