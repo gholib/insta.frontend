@@ -52,32 +52,16 @@ export default {
     methods:{
         getResults(){
             this.$vs.loading({color: 'rgb(228, 222, 37)' })
-            this.$http.get('/results/' + this.$route.params.link).then(res => {
-                this.filterResults(res.data)
+            this.$http.get('instagram/results/' + this.$route.params.link).then(res => {
+                this.filterResults(res.data.results)
             }).finally(() => {
                 this.$vs.loading.close()
             })
         },
 
         filterResults(data) {
-            data = data.map(el => {
-                if (el.userName === 'jovid1242') {
-                    return {
-                        userName: '@' + el.userName,
-                        likes: 0,
-                        comments: 0,
-                        totalCoin: 0
-                    }
-                }
-                return {
-                    userName: '@' + el.userName,
-                    likes: el.likes,
-                    comments: el.comments,
-                    totalCoin: el.coins
-                }
-            })
             this.results = data.sort((a, b) => {
-                if (Number(a.totalCoin) < Number(b.totalCoin)) {
+                if (Number(a.coins) < Number(b.coins)) {
                     return 1
                 }
                 return -1
@@ -85,10 +69,10 @@ export default {
             this.results = this.results.map((el, index) => {
                 return {
                     id: index,
-                    userName: el.userName,
+                    userName: '@' + el.userName,
                     likes: el.likes,
                     comments: el.comments,
-                    totalCoin: el.totalCoin
+                    totalCoin: el.coins
                 }
             })
         }
