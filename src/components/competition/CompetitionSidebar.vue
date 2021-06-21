@@ -10,7 +10,7 @@
     v-model="isSidebarActiveLocal"
   >
     <div class="mt-6 flex items-center justify-between px-6">
-      <h4>{{ Object.entries(this.data).length === 0 ? "Добавить новую" : "Редактировать" }} конкурс</h4>
+      <h4>{{ Object.entries(this.data).length === 0 ? "Добавить новый" : "Редактировать" }} конкурс</h4>
       <feather-icon icon="XIcon" @click.stop="isSidebarActiveLocal = false" class="cursor-pointer"></feather-icon>
     </div>
     <vs-divider class="mb-0"></vs-divider>

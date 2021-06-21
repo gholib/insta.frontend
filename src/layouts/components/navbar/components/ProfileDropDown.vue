@@ -1,7 +1,12 @@
 <template>
   <div class="the-navbar__user-meta flex items-center" v-if="activeUserInfo.displayName">
+      <p v-if="!user.activated" class="mr-6">
+        Ваш аккаунт не активирован. <router-link :to="{name: 'activation'}">
+          Активировать
+        </router-link>
+      </p>
 
-    <div class="text-right leading-tight sm:block">
+    <div class="text-right flex leading-tight sm:block ml-3">
       <p class="font-semibold">{{user ? user.instaName : ''}}</p>
       <!-- <small>creativist</small> -->
     </div>

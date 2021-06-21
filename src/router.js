@@ -61,6 +61,11 @@ const router = new Router({
                 component: () => import('@/views/pages/Register.vue')
               },
               {
+                path: '/activation',
+                name: 'activation',
+                component: () => import('./views/auth/Activation.vue')
+              },
+              {
                 path: '/error-404',
                 name: 'page-error-404',
                 component: () => import('@/views/pages/Error404.vue')
