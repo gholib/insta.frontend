@@ -14,11 +14,12 @@
                                     <p>Пожалуйста войдите в свой аккаунт.</p>
                                 </div>
                                 <vs-input
-                                    name="instaName"
+                                    name="email"
                                     icon="icon icon-user"
                                     icon-pack="feather"
-                                    label="Instagram никнейм"
-                                    v-model="instaName"
+                                    label="Email"
+                                    type="email"
+                                    v-model="email"
                                     class="w-full no-icon-border"/>
 
                                 <vs-input
@@ -56,7 +57,7 @@ export default {
     data() {
         return {
             loading: false,
-            instaName: '',
+            email: '',
             password: '',
             checkbox_remember_me: false
         }

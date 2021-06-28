@@ -89,7 +89,7 @@ export default {
         getPosts(){
             if (this.posts.length === 0) {
                 this.$vs.loading()
-                this.$http.get('instagram/user/posts')
+                this.$http.get('instagram/user/posts/' + this.competitionId)
                 .then(res => {
                     this.posts = res.data.collector.map(el => {
                         return {

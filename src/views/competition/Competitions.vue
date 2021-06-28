@@ -54,6 +54,7 @@
         <vs-th>Номер</vs-th>
         <vs-th>Название</vs-th>
         <vs-th>Ссылка</vs-th>
+        <vs-th>Инстаграм никнейм</vs-th>
         <vs-th>Начало</vs-th>
         <vs-th>Конец</vs-th>
         <vs-th>Время парсинга</vs-th>
@@ -80,6 +81,10 @@
                     {{ tr.link }}
                   </a>
                 </vx-tooltip>
+              </vs-td>
+
+              <vs-td class="img-container">
+                <p class="product-category">@{{ tr.instaName }}</p>
               </vs-td>
               
               <vs-td class="img-container">

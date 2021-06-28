@@ -29,6 +29,7 @@
         </span>
         <vs-input label="Название" v-model="dataName" class="mt-5 w-full" name="item-name" />
         <vs-input label="Ссылка" v-model="dataLink" class="mt-5 w-full mb-3" name="item-name" />
+        <vs-input label="Никнейм инстаграма" v-model="instaName" class="mt-5 w-full mb-3" name="item-name" />
         <label>Начало</label>
         <flat-pickr class="w-full mb-3" :config="configFromdateTimePicker" v-model="start" />
         <label>Конец</label>
@@ -70,6 +71,7 @@ export default {
     return {
       dataImg: null,
       dataLink: null,
+      instaName: null,
       dataId: null,
       dataName: "",
       settings: {
@@ -119,6 +121,7 @@ export default {
       this.dataId = null;
       this.dataName = "";
       this.dataLink = "";
+      this.instaName = ''
       this.start = ''
       this.end = ''
       this.scrapTime = ''
@@ -177,10 +180,11 @@ export default {
         this.initValues();
         this.$validator.reset();
       } else {
-        const { id, link, name, start, end, scrapTime, likeCoin, commentCoin } = this.data
+        const { id, link, instaName, name, start, end, scrapTime, likeCoin, commentCoin } = this.data
         this.dataId = id;
         this.dataName = name;
         this.dataLink = link;
+        this.instaName = instaName
         this.start = start
         this.end = end
         this.scrapTime = scrapTime

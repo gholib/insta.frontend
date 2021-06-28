@@ -13,6 +13,7 @@ export default{
         let formData = {
             name: context.dataName,
             link: context.dataLink,
+            instaName: context.instaName,
             start: context.start,
             end: context.end,
             scrapTime: context.scrapTime,
@@ -40,6 +41,7 @@ export default{
         let formData = {
             name: context.dataName,
             link: context.dataLink,
+            instaName: context.instaName,
             start: context.start,
             end: context.end,
             scrapTime: context.scrapTime,

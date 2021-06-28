@@ -6,7 +6,7 @@ export default {
     },
     SIGNIN({commit}, context) {
         const data = {
-            instaName: context.instaName,
+            email: context.email,
             password: context.password,
         };
         context.$vs.loading({color: 'rgb(228, 222, 37)' })
@@ -50,7 +50,7 @@ export default {
         const data = {
             name:context.name,
             password:context.password,
-            instaName:context.instaName
+            email:context.email
         }
         context.$vs.loading({color: 'rgb(228, 222, 37)' })
 

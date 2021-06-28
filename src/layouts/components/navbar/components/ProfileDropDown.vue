@@ -7,7 +7,7 @@
       </p>
 
     <div class="text-right flex leading-tight sm:block ml-3">
-      <p class="font-semibold">{{user ? user.instaName : ''}}</p>
+      <p class="font-semibold">{{user ? user.name : ''}}</p>
       <!-- <small>creativist</small> -->
     </div>
 

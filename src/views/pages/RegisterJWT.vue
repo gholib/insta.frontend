@@ -13,11 +13,11 @@
     <vs-input
       v-validate="'required'"
       data-vv-validate-on="blur"
-      name="instaName"
-      type="text"
-      label-placeholder="Instagram Username"
-      placeholder="Никнейм инстаграма"
-      v-model="instaName"
+      name="email"
+      type="email"
+      label-placeholder="Email"
+      placeholder="Email"
+      v-model="email"
       class="w-full mt-6" />
     <span class="text-danger text-sm"></span>
 
@@ -57,7 +57,7 @@ export default {
   data () {
     return {
       name: '',
-      instaName: '',
+      email: '',
       password: '',
       confirmPassword: '',
     }
