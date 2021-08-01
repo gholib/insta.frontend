@@ -31,6 +31,11 @@ const router = new Router({
                 name: 'randomizer',
                 component: () => import('./views/randomizer/Randomizer.vue')
               },
+              {
+                path: '/direct-mailing',
+                name: 'direct',
+                component: () => import('./views/mail/DirectMailing.vue')
+              },
             ],
         },
         {

@@ -17,6 +17,12 @@ export default [
     slug: "add",
     icon: "GridIcon",
   },
+  {
+    url:'/direct-mailing',
+    name: "Рассылка",
+    slug: "add",
+    icon: "MailIcon",
+  },
   // {
   //   url:null,
   //   name: "Страницы",
